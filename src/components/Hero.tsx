@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Balancer from "react-wrap-balancer";
-import { Download, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import AnimatedHeadline, { getLineEndTimes } from "./ui/AnimatedHeadline";
+import ContactDialog from "./ContactDialog";
 
 export default function Hero() {
   const lines = useMemo(
@@ -23,6 +24,7 @@ export default function Hero() {
     startDelay
   );
   const revealAfter = (line2End ?? line1End) + 0.08; // small buffer
+
   return (
     <section className="relative flex min-h-[88vh] items-center justify-center px-6">
       <div className="mx-auto max-w-6xl text-center pt-28 md:pt-36">
@@ -44,7 +46,9 @@ export default function Hero() {
           className="mt-6 mx-auto max-w-2xl text-lg md:text-xl text-zinc-400 tracking-[0.01em]"
         >
           <Balancer>
-            I craft seamless digital experiences where aesthetics meet performance.
+            I start by diving into the problems at hand and how they affect
+            users, stakeholders, and teams. Then I translate those insights into
+            interfaces that are clear, efficient, and deliver results.
           </Balancer>
         </motion.p>
 
@@ -60,12 +64,11 @@ export default function Hero() {
           >
             view work <ArrowRight className="size-4" />
           </a>
-          <a
-            href="/resume.pdf"
-            className="inline-flex items-center gap-2 rounded-lg border border-green-400 px-6 py-3 font-mono text-green-400 transition hover:bg-green-400 hover:text-[#0f1115]"
-          >
-            download resume <Download className="size-4" />
-          </a>
+
+          <ContactDialog
+            triggerLabel="contact me"
+            triggerClass="inline-flex items-center gap-2 rounded-lg border border-green-400 px-6 py-3 font-mono text-green-400 transition hover:bg-green-400 hover:text-[#0f1115]"
+          />
         </motion.div>
       </div>
     </section>

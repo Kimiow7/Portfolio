@@ -1,45 +1,8 @@
 // src/components/Work.tsx
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-
-const projects = [
-  {
-    title: "Aiwifi — Webhooks & Integrations",
-    role: "UX/UI • Lead • Prototyping",
-    desc:
-      "Designed third-party integration flows that balanced backend constraints with admin usability. Reusable patterns for future connectors.",
-  },
-  {
-    title: "AudienceXQ / GhostLeads — Audiences & Mailers",
-    role: "UX/UI • Frontend Prototype",
-    desc:
-      "Fixed core audience + direct-mailer flows. Streamlined admin tasks and surfaced blockers early with high-fidelity prototypes.",
-  },
-  {
-    title: "LuganoAI — Privacy Layer",
-    role: "UX/UI • Systems",
-    desc:
-      "Exploratory prototype: privacy receipts, audit logs, and toggles. Focus on clarity and trust without sacrificing speed.",
-  },
-  {
-    title: "Landing Pages",
-    role: "UX/UI",
-    desc:
-      "Responsive landing templates optimized for readability, performance, and fast iteration.",
-  },
-  {
-    title: "Google UX Course",
-    role: "Research • Flows",
-    desc:
-      "Exercises in research, IA, and accessible design with pragmatic deliverables.",
-  },
-  {
-    title: "Upwork Client Work",
-    role: "UX/UI • Frontend",
-    desc:
-      "Shipped polished UIs and smooth handoff prototypes across multiple engagements.",
-  },
-];
+import { Link } from "react-router-dom";
+import { projects } from "../data/project";
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -54,23 +17,25 @@ const item: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }, // cubic-bezier instead of "easeOut"
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 export default function Work() {
   return (
-    <section id="work" className="relative mx-auto max-w-6xl px-6 py-24">
+    <section id="work" className="relative mx-auto max-w-6xl px-6 py-28">
+      {/* Section Heading */}
       <motion.h2
         initial={{ opacity: 0, y: 8 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="mb-12 text-center font-mono text-sm uppercase tracking-[0.3em] text-green-400"
+        className="mb-16 text-center font-mono text-3xl sm:text-4xl font-bold tracking-[0.2em] text-green-400"
       >
         Selected Work
       </motion.h2>
 
+      {/* Projects Grid */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -78,9 +43,9 @@ export default function Work() {
         viewport={{ once: true, amount: 0.2 }}
         className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {projects.map((p, i) => (
+        {projects.map((p) => (
           <motion.article
-            key={i}
+            key={p.slug}
             variants={item}
             whileHover={{ y: -4 }}
             className="group relative rounded-xl border border-white/10 bg-[#14171c] p-6 shadow-sm backdrop-blur-sm transition will-change-transform
@@ -102,17 +67,22 @@ export default function Work() {
             }}
             aria-label={`${p.title} — ${p.role}`}
           >
-            <div className="flex items-start justify-between gap-4">
-              <h3 className="text-lg font-semibold text-zinc-100">{p.title}</h3>
-              <span className="h-5 w-5 rounded-full border border-white/10 bg-white/5 transition-colors group-hover:border-green-400/60 group-hover:bg-green-400/10" />
-            </div>
-            <p className="mt-2 font-mono text-xs text-green-400">{p.role}</p>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400">{p.desc}</p>
+            <Link to={`/projects/${p.slug}`} className="block h-full">
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-lg font-semibold text-zinc-100">
+                  {p.title}
+                </h3>
+              </div>
+              <p className="mt-2 font-mono text-xs text-green-400">{p.role}</p>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-400">
+                {p.solution}
+              </p>
 
-            {/* bottom highlight on hover */}
-            <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-green-400/60 to-transparent" />
-            </div>
+              {/* bottom highlight on hover */}
+              <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-green-400/60 to-transparent" />
+              </div>
+            </Link>
           </motion.article>
         ))}
       </motion.div>
